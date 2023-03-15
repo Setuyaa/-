@@ -1,15 +1,18 @@
-#pragma once
-#define memory_value 20
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <string.h>
 
-struct block {
+void optimization();
+void print_condition();
+void* memory_allocate(size_t size);
+void memory_delete(int i);
+typedef struct {
     int flag;
     int size;
     int id;
     char* link;
-};
+} block;
 
-void memory_delete(int i, int* remains, struct block* array2, char* memory);
-void memory_allocate(int* remains, int i, struct block* array2, char* memory);
+
+

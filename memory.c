@@ -1,12 +1,12 @@
 #include "memory.h"
+ const int memory_value = 20;
+ block array2[memory_value] = { 0 };
+ int blockNumber = 1;
+ int remains = memory_value;
+ char memory[memory_value] = { 0 };
 
-int blockNumber = 1;
-int remains = memory_value;
-char memory[memory_value] = { 0 };
-struct block array2[memory_value] = { 0 };
 int operationNumber = 0;
-
-static void optimization(struct block* array2, char* memory) {
+void optimization() {
     int empty_block = 0;
     int first_place = -1;
     for (int i = 0; i < memory_value; i++) {
@@ -35,24 +35,24 @@ static void optimization(struct block* array2, char* memory) {
     }
 }
 
-static void print_condition(struct block* array2) {
+void print_condition() {
       FILE *fp;
   if((fp=fopen("test", "wb"))==NULL) {
-    printf("He удается открыть файл.\n");
+    printf("log doesn't work\n");
     exit(1);
   }
+   fprintf(fp, "Condition");
     for (int i = 0; i < memory_value; i++) {
         if (array2[i].link != NULL)
-            fprintf(fp, "Ячейка памяти %d используется блоком %d\n", i + 1, array2[i].id);
+            fprintf(fp, "Segment %d is used by %d\n", i + 1, array2[i].id);
         else
-            fprintf(fp, "Ячейка памяти %d не используется\n", i + 1);
+            fprintf(fp, "Segment %d isn't used\n", i + 1);
     }
       fclose(fp);
 }
 
-static void addBlock(struct block* array2, char* memory, int* remains, int size, int intro) {
-
-    *remains -= size;
+static void* addBlock(int size, int intro) {
+    remains -= size;
     for (int j = intro; j < intro + size; j++) {
         memory[j] = '+';
         array2[j].flag = 1;
@@ -60,14 +60,16 @@ static void addBlock(struct block* array2, char* memory, int* remains, int size,
         array2[j].link = &memory[j];
         array2[j].size = size;
     }
+    blockNumber++;
+    return &(memory[intro]);
 }
 
-static int findIntro(struct block* array2, int size) {
+static int findIntro(int size) {
     int empty_block = 0;
     int intro = -1;
 
-    // Находим ячейку вхождения блока в память intro,
-  // если кол-во идущих друг за другом ячеек памяти хватает
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ intro,
+  // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     for (int j = 0; j < memory_value; j++) {
         if (array2[j].link == NULL)
             empty_block++;
@@ -81,43 +83,32 @@ static int findIntro(struct block* array2, int size) {
     return -1;
 }
 
-void memory_allocate(int* remains, int i, struct block* array2, char* memory) {
-    int size = 0;
+void *memory_allocate(size_t size) {
     if (operationNumber == 0){
         for (int i = 0; i < memory_value; i++) {
             array2[i].link = NULL;
         }
     }
     operationNumber++;
-    printf("\nВведите размер %d блока\n", i);
-    scanf_s("%d", &size);
-    printf("\n");
-
-    // Если не хватает памяти, выдает ошибку
-    if (size > *remains || size == 0) {
+    if (size > remains || size == 0) {
         fprintf(stderr, "segfault\n\n");
-        return;
+        return 0;
     }
-
-    // Поиск ячейки вхождения
-    int intro = findIntro(array2, size);
-
-    // Если существует ячейка вхождения, добавляем блок
+    int intro = findIntro( size);
     if (intro != -1) {
-        addBlock(array2, memory, remains, size, intro);
+         operationNumber++;
+        return addBlock(size, intro);
     }
-
-    // Если не существует, но память имеется, делаем оптимизацию и добавляем блок
-    if (size >= *remains & intro == -1) {
-        optimization(array2, memory);
-        printf("Произошла оптимизация\n\n");
-        intro = findIntro(array2, size);
-        addBlock(array2, memory, remains, size, intro);
+    if (size >= remains & intro == -1) {
+        optimization();
+        intro = findIntro(size);
+         operationNumber++;
+        return addBlock(size, intro);
     }
-    operationNumber++;
+    return 0;
 }
 
-void memory_delete(int i, int* remains, struct block* array2, char* memory) {
+void memory_delete(int i) {
     int keySize = 0;
     for (int j = 0; j < memory_value; j++) {
         if (array2[j].id == i) {
@@ -129,5 +120,5 @@ void memory_delete(int i, int* remains, struct block* array2, char* memory) {
             array2[j].link = NULL;
         }
     }
-    *remains += keySize;
+    remains += keySize;
 }
