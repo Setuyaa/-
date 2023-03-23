@@ -148,16 +148,35 @@ void memory_delete_element(char *a) {
 }
 
 void print_console(char* arr) {
-   printf("Condition");
+   printf("Condition:\n");
     int size = 0;
     for (int i = 0; i < 20; i++)
     {
         if (array2[i].link == arr) {
             size = array2[i].size;
-            printf(" im here %d\n", size);
             break;
         }
     }
     for (int i = 0; i < size; i++)
         printf("%c", arr[i]);
+}
+void queue_activity(char* arr, int last, int first) {
+    int id = -1;
+    // printf("im here");
+   //  printf("%d %d",  last, first);
+    int intro = -1;
+    for (int i = 0; i < 20; i++)
+    {
+        if (array2[i].link == arr) {
+            id = array2[i].id;
+            intro = i;
+            break;
+        }
+    }
+
+    for (int i = last; i > first; i--) {
+        array2[i-1+intro] = array2[i-2+intro];
+        memory[i-1+intro] = memory[i-2+intro];
+      //  printf("%c", memory[i-1+intro]);
+    }
 }

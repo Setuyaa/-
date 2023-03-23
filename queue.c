@@ -1,23 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
+#include "memory.h"
+#include "queue.h"
 
-struct queue {
-        char *data;  // указатель на данные
-        int low;        // указатель на нижнюю границу
-        int high;       // указатель на верхнюю границу
-        int count;      // количество элементов в очереди
-        int max;        // максимальное количество элементов
-};
-struct queue *init (int size)
+queue init (int size)
 {
-        struct queue * q = calloc(1, sizeof (struct queue));
-        q->data = calloc (size, sizeof (void*));
-        q->low = q->high = size - 1;
-        q->max = size;
+        queue q;
+        q.data = memory_allocate (size);
+        q.low = q.high = size - 1;
+        q.max = size;
+        q.count = 0;
         return q;
 }
-void queue_add (struct queue *q, char a)
+void queue_add (queue *q, char a)
 {
         if (q->count == q->max) {
                 fprintf (stderr, "not enough queue size\n");
@@ -30,27 +23,23 @@ void queue_add (struct queue *q, char a)
                 q->low = q->max - 1;
         }
 }
-char queue_get (struct queue *q)
+char queue_get (queue *q)
 {
-        char a = q->data[q->high--];
+        char a = q->data[q->max -1];
+        memory_delete_element(&(q->data[q->high--]));
         q->count--;
-
+        queue_activity(q->data, q->max, q->count);
         if (q->high < 0) {
                 q->high = q->max - 1;
         }
         return a;
 }
-int main (int argc, char **argv)
-{
-    struct queue *q = init (10);
 
-    queue_add (q, '2');
-    queue_add (q, 'c');
-    queue_add (q, 'b');
-    queue_add (q, 'a');
-
-    for (int i = 0; i < 4; i++) {
-        char ret = queue_get (q);
-        printf ("%c\n", ret);
-    }
+void print_queue(queue *q) {
+   printf("Condition");
+   int data = 0;
+        while (q[data].data != NULL) {
+            printf("Segment %d is used by %s\n", q[data].count, q[data].data);
+            data++;
+        }
 }

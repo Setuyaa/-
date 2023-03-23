@@ -10,6 +10,7 @@ void* memory_allocate(size_t size);
 void memory_delete(char * arr);
 void memory_delete_element(char *a);
 void print_console(char* arr);
+void queue_activity(char* arr, int last, int first);
 typedef struct {
     int flag;
     int size;
