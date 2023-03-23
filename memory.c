@@ -108,17 +108,56 @@ void *memory_allocate(size_t size) {
     return 0;
 }
 
-void memory_delete(int i) {
+void memory_delete(char * arr) {
     int keySize = 0;
+    int i = 0;
+    for (int j = 0; j < 20; j++)
+    {
+         if (array2[j].link == arr) {
+            i = array2[j].id;
+            break;
+        }
+    }
     for (int j = 0; j < memory_value; j++) {
         if (array2[j].id == i) {
             keySize = array2[j].size;
             memory[j] = 0;
             array2[j].flag = 0;
-            array2[j].id = 0;
+            array2[j].id = -1;
             array2[j].size = 0;
             array2[j].link = NULL;
         }
     }
     remains += keySize;
+}
+void memory_delete_element(char *a) {
+    int keySize = 1;
+    int i = -1;
+    for (int j = 0; j < 20; j++)
+    {
+         if (array2[j].link == a) {
+            memory[j] = '+';
+            array2[j].flag = 0;
+            array2[j].id = -1;
+            array2[j].size = 0;
+            array2[j].link = NULL;
+            break;
+        }
+    }
+    remains += keySize;
+}
+
+void print_console(char* arr) {
+   printf("Condition");
+    int size = 0;
+    for (int i = 0; i < 20; i++)
+    {
+        if (array2[i].link == arr) {
+            size = array2[i].size;
+            printf(" im here %d\n", size);
+            break;
+        }
+    }
+    for (int i = 0; i < size; i++)
+        printf("%c", arr[i]);
 }

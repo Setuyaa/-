@@ -4,20 +4,26 @@
 void demo() {
     printf("Демо режим\n");\
     char* ar[8];
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 6; i++) {
         int g = 0;
         scanf("%d", &g);
         ar[i] = memory_allocate(g);
     }
     printf("Состояние после выделения памяти:\n");
     print_condition();
-    for (int i = 0; i < 20; i++) {
-        printf("%s", ar[i]);
+    for (int i = 0; i < 6; i++) {
+        print_console(ar[i]);
+        printf("\n");
     }
-//     printf("Удаление блоков 2 и 4\n");
-//     memory_delete(1); // указатель
-//     memory_delete(3);  // указатель
-//     printf("Состояние памяти после удаления:\n");
+    printf("Удаление блоков 2 и 4\n");
+    memory_delete(ar[1]); // указатель
+    memory_delete(ar[3]);  // указатель
+    printf("Состояние памяти после удаления:\n");
+  print_condition();
+    for (int i = 0; i < 6; i++) {
+        print_console(ar[i]);
+        printf("\n");
+    }
 //     print_condition();
 //     printf("Удаление блока 3\n");
 //     memory_delete(2);  // указатель
