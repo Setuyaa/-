@@ -2,12 +2,13 @@
 #include "queue.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main() {
   // Инициализируем стек и очередь
   stack s = create_stack(3);
   queue q = init(5);
-
+ 
   // Добавляем элементы в стек
   push(&s, 'A');
   push(&s, 'B');
@@ -22,14 +23,11 @@ int main() {
   printf("Stack:\n");
   print(s);
   printf("\nQueue:\n");
-  print_queue(&q); // seg
+  print_queue(&q); 
 
-  // Выбираем элемент для удаления из стека
-  char remove_stack;
   // Удаляем элемент из стека
   printf("The process of deleting from stack.\n");
   pop(&s);
-  // Выбираем элемент для удаления из очереди
   printf("Queue ");
   print_console(q.data);
   printf("\n");
