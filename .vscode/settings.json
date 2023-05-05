@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "stdio.h": "c",
+        "chrono": "c",
+        "unordered_map": "c"
+    }
+}

@@ -1,5 +1,5 @@
 #include "memory.h"
-const int memory_value = 20;
+const int memory_value = 100;
 block array2[memory_value] = {0};
 int blockNumber = 1;
 int remains = memory_value;
@@ -174,4 +174,11 @@ void queue_activity(char *arr, int last, int first) {
     memory[i - 1 + intro] = memory[i - 2 + intro];
     //  printf("%c", memory[i-1+intro]);
   }
+}
+void * memmory_allocate(size_t size) {
+    void* t = malloc(size);
+    return t;
+}
+void memmory_delete(void* t) {
+  free(t);
 }

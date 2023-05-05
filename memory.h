@@ -7,7 +7,9 @@
 void optimization();
 void print_condition();
 void* memory_allocate(size_t size);
+void * memmory_allocate(size_t size);
 void memory_delete(char * arr);
+void memmory_delete(void *t);
 void memory_delete_element(char *a);
 void print_console(char* arr);
 void queue_activity(char* arr, int last, int first);

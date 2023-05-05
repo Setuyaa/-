@@ -36,11 +36,9 @@ void push(stack *pt, char x) {
     exit(EXIT_FAILURE);
   }
   pt->items[++pt->top] = x;
-  printf("%d 1 \n", pt->top);
   printf("Element %c added\n\n", x);
 }
 int isEmpty(stack *pt) {
-  printf("%d 2 \n", pt->top);
   return pt->top == -1;
 }
 

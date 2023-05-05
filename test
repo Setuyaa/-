@@ -1,13 +1,13 @@
 ConditionSegment 1 is used by 1
-Segment 2 is used by 2
-Segment 3 is used by 2
+Segment 2 isn't used
+Segment 3 isn't used
 Segment 4 is used by 3
 Segment 5 is used by 3
 Segment 6 is used by 3
-Segment 7 is used by 4
-Segment 8 is used by 4
-Segment 9 is used by 4
-Segment 10 is used by 4
+Segment 7 isn't used
+Segment 8 isn't used
+Segment 9 isn't used
+Segment 10 isn't used
 Segment 11 is used by 5
 Segment 12 is used by 5
 Segment 13 is used by 5
