@@ -19,7 +19,7 @@ HashTable* CreateTable(){
     return ht;
 }
 static Item* CreateItem (char* key, char* value){
-    Item* newItem = (Item*)memmory_allocate(sizeof(Item));
+    Item* newItem ; //(Item*)memmory_allocate(sizeof(Item));
     newItem -> key = memory_allocate(strlen(key));
     newItem -> value =  memory_allocate(strlen(value));
     strcpy(newItem -> key, key);
@@ -31,7 +31,7 @@ static Item* CreateItem (char* key, char* value){
 void put(HashTable* ht, char* key, char* value)
 {
      unsigned int index = hash(key);
-    Item* new_item = (Item*)memmory_allocate(sizeof(Item));
+    Item* new_item= (Item*)memmory_allocate(sizeof(Item));
     new_item->key = key;
     new_item->value = value;
     new_item->next = NULL;
